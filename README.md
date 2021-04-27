@@ -1,12 +1,12 @@
 <h1 align="center">MultiWOZ Context-to-Response Evaluation</h1>
 
-<h2 align="center">Standardized and easy to use Inform, Success, BLEU score</h2>
+<h3 align="center">Standardized and easy to use Inform, Success, BLEU score</h3>
 
 <p>&nbsp;</p>
 
 _______
 
-TODO: short description
+Easy-to-use scripts for standardized evaluation of response generation on the MultiWOZ benchmark. This repository contains an implementation of the MultiWOZ database with fuzzy matching, functions for normalization of slot names and values, and a careful implementation of the BLEU score and Inform & Succes rates. 
 
 # Usage
 
@@ -15,12 +15,12 @@ TODO: short description
 ``` sh
 python evaluate.py [--bleu] [--success] [--richness] --input INPUT.json [--output OUTPUT.json]
 ```
-Add the `bleu` option to evaluate the BLEU score, `success` to get the Success and Inform rates, and use `richness` for getting lexical richness metrics such as the number of unique unigrams, trigrams, token entropy, bigram conditional entropy, corpus MSTTR-50, and average turn length. 
+Add `--bleu` to evaluate the BLEU score, `--success` to get the Success and Inform rates, and use `--richness` for getting lexical richness metrics such as the number of unique unigrams, trigrams, token entropy, bigram conditional entropy, corpus MSTTR-50, and average turn length. 
 
 
 **Input format:**
 
-``` json
+``` python
 {
     "xxx0000" : [
         {
@@ -45,7 +45,7 @@ The input `.json` file should contain a dictionary with keys matching dialogue i
     python add_slot_domains.py [-h] -i INPUT.json -o OUTPUT.json
     ```
 
-See the `predictions` folder for examples.
+See the [`predictions`](predictions) folder for examples.
 
 **Alternative usage directly from your code.** First instantiate an evaluator and then call the `evalute` method with dictionary of your predictions with the same format as describe above. Pseudo-code:
 
@@ -60,13 +60,25 @@ for epoch in data:
     print(f"Epoch {epoch} BLEU: {results}")
 ```
 
+
+**Output format:**
+
+asdfasdfasd
+
+
 # Hall of fame
 
-TODO: tables with results
+**End-to-end models**, i.e. those that use only the context as input.
 
-# Documentation
+| Model         | BLEU  | Inform  | Success  |
+| ------------- | -----:| -------:| --------:|
+| MyCoolModel   |42.0   | 19.0    | 19.0     |
 
-TODO: description of methods
+**Policy optimization models**, i.e. those that use the ground-truth dialog states.
+
+| Model         | BLEU  | Inform  | Success  |
+| ------------- | -----:| -------:| --------:|
+| MyCoolModel   |42.0   | 19.0    | 19.0     |
 
 # Citation
 `TBA`
