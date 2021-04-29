@@ -1,1 +1,4 @@
 /__pycache__
+data/gold_states.json
+data/references/mwz22.json
+evaluation_results.json
