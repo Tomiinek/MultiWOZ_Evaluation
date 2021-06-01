@@ -104,17 +104,18 @@ def get_success(input_data, database, goals, booked_domains):
         4) Use ground-truth dialog state and optimistic scenario
     """
     
-    if not has_domain_predictions(input_data):
-        sys.stderr.write('warning: Missing domain predictions, estimating active domains from dialog states!\n')
-        get_domain_estimates_from_state(input_data)    
-
     if not has_state_predictions(input_data):
         sys.stderr.write('warning: Missing state predictions, using ground-truth dialog states from MultiWOZ 2.2!\n')
         states = load_gold_states()  
         for dialog_id in input_data:
             for i, turn in enumerate(input_data[dialog_id]):
                 turn["state"] = states[dialog_id][i]
+    
+    if not has_domain_predictions(input_data):
+        sys.stderr.write('warning: Missing domain predictions, estimating active domains from dialog states!\n')
+        get_domain_estimates_from_state(input_data)    
 
+    total = Counter()
     match_rate = {}
     success_rate = {}
     for dialog_id, dialog in input_data.items(): 
@@ -132,11 +133,13 @@ def get_success(input_data, database, goals, booked_domains):
             database
         )
 
-        match_rate   = {domain: match.get(domain, 0)   + match_rate.get(domain, 0)   for domain in set(match)   | set(match_rate)}
-        success_rate = {domain: success.get(domain, 0) + success_rate.get(domain, 0) for domain in set(success) | set(success_rate)}
+        for domain in set(match) | set(success):
+            total[domain] += 1    
+            match_rate[domain]   = match.get(domain, 0)   + match_rate.get(domain, 0)
+            success_rate[domain] = success.get(domain, 0) + success_rate.get(domain, 0)
 
-    match_rate   = {k : round(100 * match_rate[k]   / len(input_data), 1) for k in match_rate}
-    success_rate = {k : round(100 * success_rate[k] / len(input_data), 1) for k in success_rate}
+    match_rate   = {k : round(100 * match_rate[k]   / total[k], 1) for k in match_rate}
+    success_rate = {k : round(100 * success_rate[k] / total[k], 1) for k in success_rate}
 
     return ({"inform" : match_rate, "success" : success_rate})
 

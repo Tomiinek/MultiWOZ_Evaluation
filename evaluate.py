@@ -30,7 +30,11 @@ if __name__ == '__main__':
     e = Evaluator(args.bleu, args.success, args.richness)
     results = e.evaluate(input_data)
 
-    print(results)
+    for metric in results:
+        print(f"====== {metric.upper()} ======")
+        for k, v in results[metric].items():
+            print(f"{k.ljust(15)}{v}")
+        print("")
 
     with open(args.output, 'w+') as f:
         json.dump(results, f)
