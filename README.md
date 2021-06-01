@@ -10,12 +10,19 @@ Easy-to-use scripts for standardized evaluation of response generation on the [M
 
 # Usage
 
+**Getting started:**
+
+``` sh
+git clone https://github.com/Tomiinek/MultiWOZ_Evaluation.git && cd MultiWOZ_Evaluation
+pip install -r requirements.txt
+```
+
 **Running:**
 
 ``` sh
 python evaluate.py [--bleu] [--success] [--richness] --input INPUT.json [--output OUTPUT.json]
 ```
-Add `--bleu` to evaluate the BLEU score, `--success` to get the Success and Inform rates, and use `--richness` for getting lexical richness metrics such as the number of unique unigrams, trigrams, token entropy, bigram conditional entropy, corpus MSTTR-50, and average turn length. 
+Add `--bleu` to evaluate the BLEU score, `--success` to get the Success & Inform rate, and use `--richness` for getting lexical richness metrics such as the number of unique unigrams, trigrams, token entropy, bigram conditional entropy, corpus MSTTR-50, and average turn length. 
 
 
 **Input format:**
@@ -38,14 +45,14 @@ Add `--bleu` to evaluate the BLEU score, `--success` to get the Success and Info
 The input `.json` file should contain a dictionary with keys matching dialogue ids in the `xxx0000` format (e.g. `sng0073` instead of `SNG0073.json`), and values containing a list of turns. Each turn is a dictionary with keys:
 
 - **`response`** – Your generated delexicalized response. You can use either the slot names with domain names, e.g. `restaurant_food`, or the domain adaptive delexicalization scheme, e.g. `food`.   
-- **`state`** – **Optional**, the predicted dialog state. If not present (for example in case of policy optimization models), the ground truth dialog state from MultiWOZ 2.2 is used during the Inform and Success computation. Slot names and values are normalized prior the usage.
-- **`active_domains`** – **Optional**, list of active domains for the corresponding turn. If not present, the active domains are estimated from changes in the dialog state during the Inform and Success rate computation. If your model predicts the domain for each turn, place them here. If you use domains in slot names, run the following command to extract the active domains from slot names automatically: 
+- **`state`** – **Optional**, the predicted dialog state. If not present (for example in case of policy optimization models), the ground truth dialog state from MultiWOZ 2.2 is used during the Inform & Success computation. Slot names and values are normalized prior the usage.
+- **`active_domains`** – **Optional**, list of active domains for the corresponding turn. If not present, the active domains are estimated from changes in the dialog state during the Inform & Success rate computation. If your model predicts the domain for each turn, place them here. If you use domains in slot names, run the following command to extract the active domains from slot names automatically: 
 
     ``` sh
     python add_slot_domains.py [-h] -i INPUT.json -o OUTPUT.json
     ```
 
-See the [`predictions`](predictions) folder for examples.
+See the [`predictions`](predictions) folder with examples.
 
 **Alternative usage directly from your code.** First instantiate an evaluator and then call the `evalute` method with dictionary of your predictions with the same format as describe above. Pseudo-code:
 
@@ -95,8 +102,9 @@ The evaluation script outputs a dictionary with keys `bleu`, `success`, and `ric
 | Corpus  | -    | 93.7 | 90.9 | 14.00 | 3.01 | 1407 | 23877 | 
 | DAMD ([paper](https://arxiv.org/abs/1911.10484)\|[code](https://github.com/thu-spmi/damd-multiwoz))  | 16.4 | 57.9 | 47.6 | 14.27 | 1.65 | 212  | 1755  |
 | MinTL ([paper](https://arxiv.org/pdf/2009.12005.pdf)\|[code](https://github.com/zlinao/MinTL)) | **19.4** | 73.7 | 65.4 | 14.78 | 1.81 | 297  | 2525  |
-| UBAR ([paper](https://arxiv.org/abs/2012.03539)\|[code](https://github.com/TonyNemo/UBAR-MultiWOZ))  | 17.6 | **83.4** | **70.3** | 13.54 | 2.10 | 478  | 5238  |
-| AuGPT ([paper](https://arxiv.org/abs/2102.05126)\|[code](https://github.com/ufal/augpt)) | 16.8 | 76.6 | 60.5 | 12.90 | **2.15** | **608**  | **5843**  |
+| UBAR ([paper](https://arxiv.org/abs/2012.03539)\|[code](https://github.com/TonyNemo/UBAR-MultiWOZ))  | 17.6 | **83.4** | 70.3 | 13.54 | 2.10 | 478  | 5238  |
+| SOLOIST ([paper](https://arxiv.org/abs/2005.05298))  | 13.6 | 82.3 | **72.4** | 18.45 | **2.41** | **615**  | **7923**  |
+| AuGPT ([paper](https://arxiv.org/abs/2102.05126)\|[code](https://github.com/ufal/augpt)) | 16.8 | 76.6 | 60.5 | 12.90 | 2.15 | 608  | 5843  |
 | LABES ([paper](https://arxiv.org/pdf/2009.08115v3.pdf)\|[code](https://github.com/thu-spmi/LABES)) | 18.9 | 68.5 | 58.1 | 14.20 | 1.83 | 374  | 3228  |
 | DoTS ([paper](https://arxiv.org/pdf/2103.06648.pdf))  | 16.8 | 80.4 | 68.7 | 14.66 | 2.10 | 411  | 5162  |
 
