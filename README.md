@@ -103,7 +103,7 @@ The evaluation script outputs a dictionary with keys `bleu`, `success`, and `ric
 
 | Model              | BLEU | Inform  | Success  | Avg. len. | CBE | #uniq. words | #uniq. 3-grams |
 | ------------------ | -----:| -------:| --------:| ---------:| -----------------:| -------------:| -------------:| 
-| Reference corpus &nbsp; &nbsp; &nbsp; | -    | 93.7 | 90.9 | 14.00 | 3.01 | 1407 | 23877 | 
+| Reference corpus &nbsp; | -    | 93.7 | 90.9 | 14.00 | 3.01 | 1407 | 23877 | 
 
 **End-to-end models**, i.e. those that use only the context as input.
 
