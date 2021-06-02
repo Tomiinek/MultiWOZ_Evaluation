@@ -101,11 +101,14 @@ The evaluation script outputs a dictionary with keys `bleu`, `success`, and `ric
 
 -------------------
 
+| Model              | BLEU | Inform  | Success  | Avg. len. | CBE | #uniq. words | #uniq. 3-grams |
+| ------------------ | -----:| -------:| --------:| ---------:| -----------------:| -------------:| -------------:| 
+| Reference corpus &nbsp; &nbsp; &nbsp; | -    | 93.7 | 90.9 | 14.00 | 3.01 | 1407 | 23877 | 
+
 **End-to-end models**, i.e. those that use only the context as input.
 
 | Model              | BLEU | Inform  | Success  | Avg. len. | CBE | #uniq. words | #uniq. 3-grams |
 | ------------------ | -----:| -------:| --------:| ---------:| -----------------:| -------------:| -------------:| 
-| Corpus  | -    | 93.7 | 90.9 | 14.00 | 3.01 | 1407 | 23877 | 
 | DAMD ([paper](https://arxiv.org/abs/1911.10484)\|[code](https://github.com/thu-spmi/damd-multiwoz))  | 16.4 | 57.9 | 47.6 | 14.27 | 1.65 | 212  | 1755  |
 | MinTL ([paper](https://arxiv.org/pdf/2009.12005.pdf)\|[code](https://github.com/zlinao/MinTL)) | **19.4** | 73.7 | 65.4 | 14.78 | 1.81 | 297  | 2525  |
 | UBAR ([paper](https://arxiv.org/abs/2012.03539)\|[code](https://github.com/TonyNemo/UBAR-MultiWOZ))  | 17.6 | **83.4** | 70.3 | 13.54 | 2.10 | 478  | 5238  |
