@@ -95,9 +95,15 @@ The evaluation script outputs a dictionary with keys `bleu`, `success`, and `ric
 
 # Hall of Fame
 
+- See the [`predictions`](predictions) folder for details about the raw generated predictions.
+- BLEU reported in these tables is calculated with references obtained from the *MultiWOZ 2.2 span annotations*.
+- CBE stands for *conditional bigram entropy*. 
+
+-------------------
+
 **End-to-end models**, i.e. those that use only the context as input.
 
-| Model              | BLEU* | Inform  | Success  | Avg. len. | Cond. bigram ent. | Num. unigrams | Num. trigrams |
+| Model              | BLEU | Inform  | Success  | Avg. len. | CBE | #uniq. words | #uniq. 3-grams |
 | ------------------ | -----:| -------:| --------:| ---------:| -----------------:| -------------:| -------------:| 
 | Corpus  | -    | 93.7 | 90.9 | 14.00 | 3.01 | 1407 | 23877 | 
 | DAMD ([paper](https://arxiv.org/abs/1911.10484)\|[code](https://github.com/thu-spmi/damd-multiwoz))  | 16.4 | 57.9 | 47.6 | 14.27 | 1.65 | 212  | 1755  |
@@ -108,9 +114,9 @@ The evaluation script outputs a dictionary with keys `bleu`, `success`, and `ric
 | LABES ([paper](https://arxiv.org/pdf/2009.08115v3.pdf)\|[code](https://github.com/thu-spmi/LABES)) | 18.9 | 68.5 | 58.1 | 14.20 | 1.83 | 374  | 3228  |
 | DoTS ([paper](https://arxiv.org/pdf/2103.06648.pdf))  | 16.8 | 80.4 | 68.7 | 14.66 | 2.10 | 411  | 5162  |
 
-**Policy optimization models**, i.e. those that use the ground-truth dialog states.
+**Policy optimization models**, i.e. those that use also the ground-truth dialog states.
 
-| Model              | BLEU* | Inform  | Success  | Avg. len. | Cond. bigram ent. | Num. unigrams | Num. trigrams |
+| Model              | BLEU | Inform  | Success  | Avg. len. | CBE | #uniq. words | #uniq. 3-grams |
 | ------------------ | -----:| -------:| --------:| ---------:| -----------------:| -------------:| -------------:|
 | MarCo ([paper](https://arxiv.org/pdf/2004.12363.pdf)\|[code](https://github.com/InitialBug/MarCo-Dialog))   | 17.3 | 94.5 | 87.2 | 16.01 | **1.94** | 319 | **3002** | 
 | HDSA ([paper](https://arxiv.org/pdf/1905.12866.pdf)\|[code](https://github.com/wenhuchen/HDSA-Dialog))    | **20.7** | 87.9 | 79.4 | 14.42 | 1.64 | 259 | 2019 |
@@ -118,8 +124,6 @@ The evaluation script outputs a dictionary with keys `bleu`, `success`, and `ric
 | SFN ([paper](https://arxiv.org/pdf/1907.10016.pdf)\|[code](https://github.com/Shikib/structured_fusion_networks))     | 14.1 | 93.4 | 82.3 | 14.93 | 1.63 | 188 | 1218 |
 | UniConv ([paper](https://arxiv.org/pdf/2004.14307.pdf)\|[code](https://github.com/henryhungle/UniConv)) | 18.1 | 66.7 | 58.7 | 14.17 | 1.79 | **338** | 2932 |
 | LAVA ([paper](https://arxiv.org/abs/2011.09378)\|[code](https://gitlab.cs.uni-duesseldorf.de/general/dsml/lava-public/-/tree/master/experiments_woz/sys_config_log_model/2020-05-12-14-51-49-actz_cat))    | 10.8 | **95.9** | **93.5** | 13.28 | 1.27 | 176 | 708  |
-
-*\*BLEU calculated with references obtained using the MultiWOZ 2.2 delexicalization.*
 
 # Contributing
 
