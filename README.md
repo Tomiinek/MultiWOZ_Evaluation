@@ -8,7 +8,7 @@ _______
 
 Easy-to-use scripts for standardized evaluation of response generation on the [MultiWOZ benchmark](https://github.com/budzianowski/multiwoz). This repository contains an implementation of the MultiWOZ database with fuzzy matching, functions for normalization of slot names and values, and a careful implementation of the BLEU score and Inform & Succes rates. 
 
-# Usage
+# :rocket: Usage
 
 **Getting started:**
 
@@ -45,7 +45,7 @@ Add `--bleu` to evaluate the BLEU score, `--success` to get the Success & Inform
 The input `.json` file should contain a dictionary with keys matching dialogue ids in the `xxx0000` format (e.g. `sng0073` instead of `SNG0073.json`), and values containing a list of turns. Each turn is a dictionary with keys:
 
 - **`response`** – Your generated delexicalized response. You can use either the slot names with domain names, e.g. `restaurant_food`, or the domain adaptive delexicalization scheme, e.g. `food`.   
-- **`state`** – **Optional**, the predicted dialog state. If not present (for example in case of policy optimization models), the ground truth dialog state from MultiWOZ 2.2 is used during the Inform & Success computation. Slot names and values are normalized prior the usage.
+- **`state`** – **Optional**, the predicted dialog state. If not present (for example in the case of policy optimization models), the ground truth dialog state from MultiWOZ 2.2 is used during the Inform & Success computation. Slot names and values are normalized prior the usage.
 - **`active_domains`** – **Optional**, list of active domains for the corresponding turn. If not present, the active domains are estimated from changes in the dialog state during the Inform & Success rate computation. If your model predicts the domain for each turn, place them here. If you use domains in slot names, run the following command to extract the active domains from slot names automatically: 
 
     ``` sh
@@ -54,7 +54,7 @@ The input `.json` file should contain a dictionary with keys matching dialogue i
 
 See the [`predictions`](predictions) folder with examples.
 
-**Alternative usage directly from your code.** First instantiate an evaluator and then call the `evalute` method with dictionary of your predictions with the same format as describe above. Pseudo-code:
+**Alternative usage directly from your code.** First instantiate an evaluator and then call the `evaluate` method with dictionary of your predictions with the same format as describe above. Pseudo-code:
 
 ``` python
 from multiwoz_evaluation.metrics import Evaluator
@@ -93,7 +93,7 @@ The evaluation script outputs a dictionary with keys `bleu`, `success`, and `ric
 - **Lexical richness** contains the number of distinct uni-, bi-, and tri-grams, average number of tokens in generated responses, token entropy, conditional bigram entropy, and MSTTR-50 calculated on concatenated responses.
 
 
-# Hall of Fame
+# :trophy: Hall of Fame
 
 - See the [`predictions`](predictions) folder for details about the raw generated predictions.
 - BLEU reported in these tables is calculated with references obtained from the *MultiWOZ 2.2 span annotations*.
@@ -101,13 +101,13 @@ The evaluation script outputs a dictionary with keys `bleu`, `success`, and `ric
 
 -------------------
 
-| Model              | BLEU | Inform  | Success  | Avg. len. | CBE | #uniq. words | #uniq. 3-grams |
+| Model              | BLEU | Inform  | Success  | Av. len. | CBE | #uniq. words | #uniq. 3-grams |
 | ------------------ | -----:| -------:| --------:| ---------:| -----------------:| -------------:| -------------:| 
 | Reference corpus &nbsp; | -    | 93.7 | 90.9 | 14.00 | 3.01 | 1407 | 23877 | 
 
 **End-to-end models**, i.e. those that use only the context as input.
 
-| Model              | BLEU | Inform  | Success  | Avg. len. | CBE | #uniq. words | #uniq. 3-grams |
+| Model              | BLEU | Inform  | Success  | Av. len. | CBE | #uniq. words | #uniq. 3-grams |
 | ------------------ | -----:| -------:| --------:| ---------:| -----------------:| -------------:| -------------:| 
 | DAMD ([paper](https://arxiv.org/abs/1911.10484)\|[code](https://github.com/thu-spmi/damd-multiwoz))  | 16.4 | 57.9 | 47.6 | 14.27 | 1.65 | 212  | 1755  |
 | MinTL ([paper](https://arxiv.org/pdf/2009.12005.pdf)\|[code](https://github.com/zlinao/MinTL)) | **19.4** | 73.7 | 65.4 | 14.78 | 1.81 | 297  | 2525  |
@@ -119,7 +119,7 @@ The evaluation script outputs a dictionary with keys `bleu`, `success`, and `ric
 
 **Policy optimization models**, i.e. those that use also the ground-truth dialog states.
 
-| Model              | BLEU | Inform  | Success  | Avg. len. | CBE | #uniq. words | #uniq. 3-grams |
+| Model              | BLEU | Inform  | Success  | Av. len. | CBE | #uniq. words | #uniq. 3-grams |
 | ------------------ | -----:| -------:| --------:| ---------:| -----------------:| -------------:| -------------:|
 | MarCo ([paper](https://arxiv.org/pdf/2004.12363.pdf)\|[code](https://github.com/InitialBug/MarCo-Dialog))   | 17.3 | 94.5 | 87.2 | 16.01 | **1.94** | 319 | **3002** | 
 | HDSA ([paper](https://arxiv.org/pdf/1905.12866.pdf)\|[code](https://github.com/wenhuchen/HDSA-Dialog))    | **20.7** | 87.9 | 79.4 | 14.42 | 1.64 | 259 | 2019 |
@@ -128,11 +128,11 @@ The evaluation script outputs a dictionary with keys `bleu`, `success`, and `ric
 | UniConv ([paper](https://arxiv.org/pdf/2004.14307.pdf)\|[code](https://github.com/henryhungle/UniConv)) | 18.1 | 66.7 | 58.7 | 14.17 | 1.79 | **338** | 2932 |
 | LAVA ([paper](https://arxiv.org/abs/2011.09378)\|[code](https://gitlab.cs.uni-duesseldorf.de/general/dsml/lava-public/-/tree/master/experiments_woz/sys_config_log_model/2020-05-12-14-51-49-actz_cat))    | 10.8 | **95.9** | **93.5** | 13.28 | 1.27 | 176 | 708  |
 
-# Contributing
+# :clap: Contributing
 
 - **If you would like to add your results into the Hall of Fame**, modify the particular table, add the file with predictions into the `predictions` folder, and create a pull request.
 - **If you need to update the [slot name mapping](https://github.com/Tomiinek/MultiWOZ_Evaluation/blob/29512dec6df009e6b579a4aa8d26f8c1c6e85e35/normalization.py#L36-L55)** because of your different delexicalization style, feel free to make the changes, and create a pull request.
 - **If you would like to improve [normalization of slot values](https://github.com/Tomiinek/MultiWOZ_Evaluation/blob/29512dec6df009e6b579a4aa8d26f8c1c6e85e35/normalization.py#L63-L254)**, add your new rules, and create a pull request.
 
-# Citation
+# :thought_balloon: Citation
 `TBA`

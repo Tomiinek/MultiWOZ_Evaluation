@@ -185,4 +185,4 @@ def load_multiwoz22():
     with open(state_path, 'w+') as f:
         json.dump(states, f, indent=2)
 
-    return mwz22_data, states
+    return references, states

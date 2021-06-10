@@ -51,7 +51,8 @@ def normalize_slot_name(slot_name):
      'INTERNET'  : ['internet', 'hotel_internet'],
      'PARKING'   : ['parking', 'hotel_parking'],
      'ID'        : ['hospital_id', 'attraction_id', 'restaurant_id'],
-     'DEPARTMENT': ['value_department', 'department', 'hospital_department']
+     'DEPARTMENT': ['value_department', 'department', 'hospital_department'],
+     'OPEN'      : ['openhours']
     }
     reverse_slot_name_mapping = {s : k for k, v in slot_name_mapping.items() for s in v}  
     if slot_name not in reverse_slot_name_mapping:
