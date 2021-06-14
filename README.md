@@ -135,4 +135,11 @@ The evaluation script outputs a dictionary with keys `bleu`, `success`, and `ric
 - **If you would like to improve [normalization of slot values](https://github.com/Tomiinek/MultiWOZ_Evaluation/blob/29512dec6df009e6b579a4aa8d26f8c1c6e85e35/normalization.py#L63-L254)**, add your new rules, and create a pull request.
 
 # :thought_balloon: Citation
-`TBA`
+```
+@article{nekvinda2021shades,
+  title={{S}hades of {BLEU}, {F}lavours of {S}uccess: {T}he {C}ase of {M}ulti{WOZ}},
+  author={Tom\'{a}\v{s} Nekvinda and Ond\v{r}ej Du\v{s}ek},
+  year={2021},
+  journal={arXiv preprint arXiv:2106.05555},
+}
+```
