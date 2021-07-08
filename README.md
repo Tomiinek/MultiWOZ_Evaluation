@@ -93,12 +93,12 @@ The evaluation script outputs a dictionary with keys `bleu`, `success`, and `ric
 - **Lexical richness** contains the number of distinct uni-, bi-, and tri-grams, average number of tokens in generated responses, token entropy, conditional bigram entropy, and MSTTR-50 calculated on concatenated responses.
 
 # 🏆 Results
-Please see the [orginal MultiWOZ repository](https://github.com/Tomiinek/multiwoz/tree/add_data) for the benchmark results.
+Please see the [orginal MultiWOZ repository](https://github.com/budzianowski/multiwoz) for the benchmark results.
 
 
 # :clap: Contributing
 
-- **If you would like to add your results**, modify the particular table in the [original reposiotry](https://github.com/Tomiinek/multiwoz/tree/add_data) via a pull request, add the file with predictions into the `predictions` folder in this repository, and create another pull request here.
+- **If you would like to add your results**, modify the particular table in the [original reposiotry](https://github.com/budzianowski/multiwoz) via a pull request, add the file with predictions into the `predictions` folder in this repository, and create another pull request here.
 - **If you need to update the [slot name mapping](https://github.com/Tomiinek/MultiWOZ_Evaluation/blob/29512dec6df009e6b579a4aa8d26f8c1c6e85e35/normalization.py#L36-L55)** because of your different delexicalization style, feel free to make the changes, and create a pull request.
 - **If you would like to improve [normalization of slot values](https://github.com/Tomiinek/MultiWOZ_Evaluation/blob/29512dec6df009e6b579a4aa8d26f8c1c6e85e35/normalization.py#L63-L254)**, add your new rules, and create a pull request.
 
