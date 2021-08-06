@@ -104,10 +104,17 @@ Please see the [orginal MultiWOZ repository](https://github.com/budzianowski/mul
 
 # :thought_balloon: Citation
 ```
-@article{nekvinda2021shades,
-  title={{S}hades of {BLEU}, {F}lavours of {S}uccess: {T}he {C}ase of {M}ulti{WOZ}},
-  author={Tom\'{a}\v{s} Nekvinda and Ond\v{r}ej Du\v{s}ek},
-  year={2021},
-  journal={arXiv preprint arXiv:2106.05555},
+@inproceedings{nekvinda-dusek-2021-shades,
+    title = "Shades of {BLEU}, Flavours of Success: The Case of {M}ulti{WOZ}",
+    author = "Nekvinda, Tom{\'a}{\v{s}} and Du{\v{s}}ek, Ond{\v{r}}ej",
+    booktitle = "Proceedings of the 1st Workshop on Natural Language Generation, Evaluation, and Metrics (GEM 2021)",
+    month = aug,
+    year = "2021",
+    address = "Online",
+    publisher = "Association for Computational Linguistics",
+    url = "https://aclanthology.org/2021.gem-1.4",
+    doi = "10.18653/v1/2021.gem-1.4",
+    pages = "34--46"
 }
+
 ```
