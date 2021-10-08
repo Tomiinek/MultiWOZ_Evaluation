@@ -17,7 +17,7 @@ from utils import load_goals, load_booked_domains, load_gold_states
 
 class Evaluator:
 
-    def __init__(self, bleu : bool, success : bool, richness : bool, dst : bool):
+    def __init__(self, bleu : bool, success : bool, richness : bool, dst : bool = False):
         self.bleu = bleu
         self.success = success
         self.richness = richness
