@@ -4,8 +4,7 @@
 import sys
 import json
 
-from normalization import normalize_data
-from metrics import Evaluator
+from mwz_evaluation.metrics import Evaluator
 
 
 if __name__ == '__main__':

@@ -68,21 +68,24 @@ def has_state_predictions(data):
 
 
 def load_goals():
-    with open(os.path.join("data", "goals.json")) as f:
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    with open(os.path.join(dir_path, "data", "goals.json")) as f:
         return json.load(f)
 
 
 def load_booked_domains():
-    with open(os.path.join("data", "booked_domains.json")) as f:
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    with open(os.path.join(dir_path, "data", "booked_domains.json")) as f:
         return json.load(f)
 
 
-def load_references(systems=['mwz22', 'damd', 'uniconv', 'hdsa', 'lava', 'augpt']):
+def load_references(systems=['mwz22']): #, 'damd', 'uniconv', 'hdsa', 'lava', 'augpt']):
     references = {}
     for system in systems:
         if system == 'mwz22':
             continue
-        with open(os.path.join("data", "references", f"{system}.json")) as f:
+        dir_path = os.path.dirname(os.path.realpath(__file__))
+        with open(os.path.join(dir_path, "data", "references", f"{system}.json")) as f:
             references[system] = json.load(f)
     if 'mwz22' in systems:
         references['mwz22'] = load_multiwoz22_reference()
@@ -90,7 +93,8 @@ def load_references(systems=['mwz22', 'damd', 'uniconv', 'hdsa', 'lava', 'augpt'
 
 
 def load_multiwoz22_reference():
-    data_path = os.path.join("data", "references", "mwz22.json")
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    data_path = os.path.join(dir_path, "data", "references", "mwz22.json")
     if os.path.exists(data_path):
         with open(data_path) as f:
             return json.load(f)
@@ -99,7 +103,8 @@ def load_multiwoz22_reference():
 
 
 def load_gold_states():
-    data_path = os.path.join("data", "gold_states.json")
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    data_path = os.path.join(dir_path, "data", "gold_states.json")
     if os.path.exists(data_path):
         with open(data_path) as f:
             return json.load(f)
@@ -176,8 +181,9 @@ def load_multiwoz22():
         references[dialog] = [x["response"] for x  in mwz22_data[dialog]]
         states[dialog] = [x["state"] for x  in mwz22_data[dialog]]
 
-    reference_path = os.path.join("data", "references", "mwz22.json")
-    state_path = os.path.join("data", "gold_states.json")
+    dir_path = os.path.dirname(os.path.realpath(__file__))
+    reference_path = os.path.join(dir_path, "data", "references", "mwz22.json")
+    state_path = os.path.join(dir_path, "data", "gold_states.json")
 
     with open(reference_path, 'w+') as f:
         json.dump(references, f, indent=2)
