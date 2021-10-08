@@ -4,6 +4,7 @@ import math
 from collections import Counter
 from sacrebleu import corpus_bleu
 from lexical_diversity import lex_div as ld
+from fuzzywuzzy import fuzz
 
 from utils import load_references
 from database import MultiWOZVenueDatabase
@@ -16,10 +17,11 @@ from utils import load_goals, load_booked_domains, load_gold_states
 
 class Evaluator:
 
-    def __init__(self, bleu : bool, success : bool, richness : bool):
+    def __init__(self, bleu : bool, success : bool, richness : bool, dst : bool = False):
         self.bleu = bleu
         self.success = success
         self.richness = richness
+        self.dst = dst
 
         if bleu:
             self.reference_dialogs = load_references()
@@ -29,12 +31,16 @@ class Evaluator:
             self.goals = load_goals()
             self.booked_domains = load_booked_domains()
 
+        if dst:
+            self.gold_states = load_gold_states() 
+
     def evaluate(self, input_data):
         normalize_data(input_data)
         return {
             "bleu"     : get_bleu(input_data, self.reference_dialogs)                             if self.bleu else None,
             "success"  : get_success(input_data, self.database, self.goals, self.booked_domains)  if self.success else None,
-            "richness" : get_richness(input_data)                                                 if self.richness else None
+            "richness" : get_richness(input_data)                                                 if self.richness else None,
+            "dst"      : get_dst(input_data, self.gold_states)                                    if self.dst else None,
         }
 
 
@@ -105,14 +111,14 @@ def get_success(input_data, database, goals, booked_domains):
     """
     
     if not has_state_predictions(input_data):
-        sys.stderr.write('warning: Missing state predictions, using ground-truth dialog states from MultiWOZ 2.2!\n')
+        #sys.stderr.write('warning: Missing state predictions, using ground-truth dialog states from MultiWOZ 2.2!\n')
         states = load_gold_states()  
         for dialog_id in input_data:
             for i, turn in enumerate(input_data[dialog_id]):
                 turn["state"] = states[dialog_id][i]
     
     if not has_domain_predictions(input_data):
-        sys.stderr.write('warning: Missing domain predictions, estimating active domains from dialog states!\n')
+        #sys.stderr.write('warning: Missing domain predictions, estimating active domains from dialog states!\n')
         get_domain_estimates_from_state(input_data)    
 
     total = Counter()
@@ -247,3 +253,75 @@ def get_dialog_success(goal, booked_domains, utterances, states, domain_estimate
         success['total'] = (sum(success.values()) >= len(success.keys()))
 
     return match, success
+
+
+def get_dst(input_data, reference_states, fuzzy_ratio=95):
+    """ Get dialog state tracking results: joint accuracy (exact state match), slot F1, precision and recall """
+    
+    def flatten(state_dict):
+        constraints = {}
+        for domain, state in state_dict.items():
+            for s, v in state.items():
+                constraints[(domain, s)] = v
+        return constraints
+
+    def is_matching(hyp, ref):
+        hyp_k = hyp.keys()
+        ref_k = ref.keys()
+        if hyp_k != ref_k:
+            return False
+        for k in ref_k:
+            if fuzz.partial_ratio(hyp[k], ref[k]) <= fuzzy_ratio:
+                return False
+        return True
+
+    def compare(hyp, ref):
+        # tp ... those mentioned in both and matching
+        # tn ... those not mentioned in both (this inflates results for slot acc., thus reporting F1)
+        # fn ... those not mentioned in hyp but mentioned in ref
+        # fp ... those mentioned in hyp but not mentioned in ref OR mentioned in hyp but not matching
+        tp, fp, fn = 0, 0, 0
+        for slot, value in hyp.items():
+            if slot in ref and fuzz.partial_ratio(value, ref[slot]) > fuzzy_ratio:
+                tp += 1
+            else:
+                fp += 1
+        for slot, value in ref.items():
+            if slot not in hyp or fuzz.partial_ratio(hyp[slot], value) <= fuzzy_ratio:
+                fn += 1
+        return tp, fp, fn
+
+    joint_match, slot_acc, slot_f1, slot_p, slot_r = 0, 0, 0, 0, 0
+
+    if not has_state_predictions(input_data):
+        sys.stderr.write('error: Missing state predictions!\n')
+
+    else:
+        total_tp, total_fp, total_fn = 0, 0, 0
+        num_turns = 0
+        for dialog_id in input_data:
+            for i, turn in enumerate(input_data[dialog_id]):
+                ref = flatten(reference_states[dialog_id][i])
+                hyp = flatten(turn['state'])
+
+                if is_matching(hyp, ref):
+                    joint_match += 1
+                
+                tp, fp, fn = compare(hyp, ref)
+                total_tp += tp
+                total_fp += fp
+                total_fn += fn
+
+                num_turns += 1
+
+        slot_p = total_tp / (total_tp + total_fp + 1e-10)
+        slot_r = total_tp / (total_tp + total_fn + 1e-10)
+        slot_f1 = 2 * slot_p * slot_r / (slot_p + slot_r + 1e-10) * 100
+        joint_match = joint_match / (num_turns + 1e-10) * 100
+
+    return {
+        'joint_accuracy'   : joint_match,
+        'slot_f1'          : slot_f1,
+        'slot_precision'   : slot_p,
+        'slot_recall'      : slot_r
+    }
