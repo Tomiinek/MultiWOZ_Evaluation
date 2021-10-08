@@ -4,7 +4,7 @@
 import sys
 import json
 
-from mwz_evaluation.metrics import Evaluator
+from mwzeval.metrics import Evaluator
 
 
 if __name__ == '__main__':

@@ -8,7 +8,7 @@ install_requires = (project_root / 'requirements.txt').read_text().splitlines()
 print(find_packages())
 
 setup(
-    name="mwz_evaluation",
+    name="mwzeval",
     author="Tomas Nekvinda",
     version="0.0.1",
     packages=find_packages(),

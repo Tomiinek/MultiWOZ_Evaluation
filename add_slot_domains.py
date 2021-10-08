@@ -6,7 +6,7 @@ import re
 import json
 
 from functools import partial
-from mwz_evaluation.utils import has_domain_predictions
+from mwzeval.utils import has_domain_predictions
 
 
 def extract_active_domains_from_slot_names(data):
