@@ -2,7 +2,7 @@ import os
 import json
 import urllib.request
 
-from normalization import normalize_data
+from mwzeval.normalization import normalize_data
 
 
 def has_domain_predictions(data):

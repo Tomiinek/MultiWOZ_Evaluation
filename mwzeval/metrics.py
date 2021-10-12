@@ -5,13 +5,13 @@ from collections import Counter
 from sacrebleu import corpus_bleu
 from lexical_diversity import lex_div as ld
 
-from utils import load_references
-from database import MultiWOZVenueDatabase
-from normalization import normalize_data
+from mwzeval.utils import load_references
+from mwzeval.database import MultiWOZVenueDatabase
+from mwzeval.normalization import normalize_data
 
-from utils import has_domain_predictions, get_domain_estimates_from_state
-from utils import has_state_predictions
-from utils import load_goals, load_booked_domains, load_gold_states
+from mwzeval.utils import has_domain_predictions, get_domain_estimates_from_state
+from mwzeval.utils import has_state_predictions
+from mwzeval.utils import load_goals, load_booked_domains, load_gold_states
 
 
 class Evaluator:

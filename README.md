@@ -14,8 +14,7 @@ Easy-to-use scripts for standardized evaluation of response generation on the [M
 **Getting started:**
 
 ``` sh
-git clone https://github.com/Tomiinek/MultiWOZ_Evaluation.git && cd MultiWOZ_Evaluation
-pip install -r requirements.txt
+pip install git+https://github.com/Tomiinek/MultiWOZ_Evaluation.git@pip-installable
 ```
 
 **Running:**
@@ -58,7 +57,7 @@ See the [`predictions`](predictions) folder with examples.
 **Alternative usage directly from your code.** First instantiate an evaluator and then call the `evaluate` method with dictionary of your predictions with the same format as describe above. Pseudo-code:
 
 ``` python
-from multiwoz_evaluation.metrics import Evaluator
+from mwzeval.metrics import Evaluator
 ...
 
 e = Evaluator(bleu=True, success=False, richness=False)
