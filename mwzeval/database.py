@@ -2,7 +2,7 @@ import os
 import json
 
 from fuzzywuzzy import fuzz
-from normalization import normalize_state_slot_value, time_str_to_minutes
+from mwzeval.normalization import normalize_state_slot_value, time_str_to_minutes
 
 
 class MultiWOZVenueDatabase:
@@ -36,8 +36,9 @@ class MultiWOZVenueDatabase:
         database_data, database_keys = {}, {}
         
         for domain in ["restaurant", "attraction", "hotel", "train"]:
-            
-            with open(os.path.join("data", "database", f"{domain}_db.json"), "r") as f:
+           
+            dir_path = os.path.dirname(os.path.realpath(__file__))
+            with open(os.path.join(dir_path, "data", "database", f"{domain}_db.json"), "r") as f:
                 database_data[domain] = json.load(f)
             
             if domain in self.IGNORE_VALUES:

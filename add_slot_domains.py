@@ -6,9 +6,7 @@ import re
 import json
 
 from functools import partial
-from normalization import normalize_data
-from metrics import get_bleu, get_success, get_richness
-from utils import has_domain_predictions
+from mwzeval.utils import has_domain_predictions
 
 
 def extract_active_domains_from_slot_names(data):
