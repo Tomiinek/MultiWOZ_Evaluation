@@ -14,7 +14,7 @@ Easy-to-use scripts for standardized evaluation of response generation on the [M
 #### Install the repository:
 
 ``` sh
-pip install git+https://github.com/Tomiinek/MultiWOZ_Evaluation.git@pip-installable
+pip install git+https://github.com/Tomiinek/MultiWOZ_Evaluation.git@master
 ```
 
 **Use it directly from your code.** Instantiate an evaluator and then call the `evaluate` method with dictionary of your predictions with a specific format ([described later](#input-format)). Set `bleu` to evaluate the BLEU score, `success` to get the Success & Inform rate, and use `richness` for getting lexical richness metrics such as the number of unique unigrams, trigrams, token entropy, bigram conditional entropy, corpus MSTTR-50, and average turn length. Pseudo-code:
