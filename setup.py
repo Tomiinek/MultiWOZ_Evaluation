@@ -10,9 +10,9 @@ print(find_packages())
 setup(
     name="mwzeval",
     author="Tomas Nekvinda",
-    version="0.0.2",
+    version="0.0.3",
     packages=find_packages(),
-    package_data={'mwzeval': ['data/**/*.json']},
+    package_data={'mwzeval': ['data/**/*.json', 'data/*.json']},
     python_requires=">=3.6",
     install_requires=install_requires,
 ) 
