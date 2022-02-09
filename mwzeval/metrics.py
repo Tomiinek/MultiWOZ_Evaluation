@@ -175,8 +175,8 @@ def get_dialog_success(goal, booked_domains, utterances, states, domain_estimate
                 matching_venues = database.query(current_domain, state[current_domain]) if current_domain in state else []
 
                 # Go through the venues returned by the API call matching the dialog state of the current turn and
-                # use them as the list of possibly offered venues if and only if any of them is *not* present in the
-                # list of possibly offered venues from the previous dialog turn
+                # use them as the list of possibly offered venues if any of the possibly offered venues from the 
+                # previous dialog turn is *not* present in the current list of matching venues, i.e., if it is not their subset
                 if current_domain not in offered_venues or len(offered_venues[current_domain]) == 0:
                     offered_venues[current_domain] = matching_venues
                 else:
