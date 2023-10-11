@@ -78,6 +78,8 @@ def normalize_state_slot_value(slot_name, value):
             return "nightclub"
         elif type_string == "guest house":
             return "guesthouse"
+        elif type_string == "concert hall":
+            return "concerthall"
         return type_string
 
     def name_to_canonical(name, domain=None):
